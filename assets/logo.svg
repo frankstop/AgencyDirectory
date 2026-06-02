@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Frankstop agency directory logo">
+  <rect width="128" height="128" fill="#f4cc45"/>
+  <path d="M18 20h88v88H18z" fill="none" stroke="#172033" stroke-width="8"/>
+  <path d="M32 34h29v16H32zM32 58h29v16H32zM32 82h20v16H32z" fill="#172033"/>
+  <path d="M70 34h34v16H86v13h16v16H86v19H70z" fill="#172033"/>
+  <path d="M22 110h84" stroke="#172033" stroke-width="8"/>
+  <circle cx="98" cy="98" r="8" fill="#d9472f"/>
+</svg>

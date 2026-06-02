@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NY HELPS Agency Directory</title>
+  <meta name="description" content="Verified official agency and hiring links for NY HELPS agencies.">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: oklch(95% 0.035 94);
+      --panel: oklch(99% 0.018 92);
+      --panel-2: oklch(91% 0.035 92);
+      --ink: oklch(17% 0.03 245);
+      --muted: oklch(38% 0.035 240);
+      --line: oklch(20% 0.025 245 / 0.22);
+      --line-strong: oklch(17% 0.03 245);
+      --accent: oklch(77% 0.16 82);
+      --accent-2: oklch(61% 0.18 26);
+      --focus: oklch(55% 0.19 250);
+      --shadow: 10px 10px 0 oklch(18% 0.03 245 / 0.16);
+      --grid: oklch(20% 0.03 245 / 0.08);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body.theme-dark {
+      color-scheme: dark;
+      --bg: oklch(18% 0.018 112);
+      --panel: oklch(23% 0.016 112);
+      --panel-2: oklch(28% 0.016 112);
+      --ink: oklch(92% 0.025 102);
+      --muted: oklch(75% 0.025 102);
+      --line: oklch(89% 0.025 102 / 0.22);
+      --line-strong: oklch(89% 0.025 102 / 0.6);
+      --accent: oklch(78% 0.115 94);
+      --accent-2: oklch(72% 0.15 35);
+      --focus: oklch(78% 0.12 210);
+      --shadow: 10px 10px 0 oklch(5% 0.01 112 / 0.35);
+      --grid: oklch(90% 0.02 102 / 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      min-height: 100%;
+    }
+
+    body {
+      min-height: 100%;
+      margin: 0;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      background:
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+        linear-gradient(0deg, var(--grid) 1px, transparent 1px),
+        radial-gradient(circle at 85% 10%, oklch(77% 0.16 82 / 0.22), transparent 28%),
+        var(--bg);
+      background-size: 64px 64px, 64px 64px, auto, auto;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: repeating-linear-gradient(0deg, oklch(100% 0 0 / 0.08), oklch(100% 0 0 / 0.08) 1px, transparent 1px, transparent 7px);
+      mix-blend-mode: multiply;
+      opacity: 0.45;
+      z-index: 3;
+    }
+
+    body.theme-dark::before {
+      mix-blend-mode: screen;
+      opacity: 0.38;
+    }
+
+    a { color: inherit; }
+
+    .shell {
+      width: min(100%, 1480px);
+      margin: 0 auto;
+      padding: clamp(16px, 3vw, 38px);
+    }
+
+    .topbar {
+      position: relative;
+      z-index: 5;
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) auto minmax(220px, 1fr);
+      gap: 20px;
+      align-items: center;
+      padding-block: 14px 18px;
+      background: color-mix(in oklch, var(--bg) 86%, transparent);
+      backdrop-filter: blur(10px);
+    }
+
+    .brand {
+      display: inline-flex;
+      gap: 12px;
+      align-items: center;
+      width: fit-content;
+      color: var(--ink);
+      text-decoration: none;
+      text-transform: uppercase;
+      font-weight: 950;
+      line-height: 0.95;
+      letter-spacing: 0.01em;
+    }
+
+    .brand img {
+      width: 52px;
+      height: 52px;
+      border: 2px solid var(--line-strong);
+      background: var(--accent);
+    }
+
+    .nav,
+    .meta,
+    .toggle {
+      display: flex;
+      border: 2px solid var(--line-strong);
+      background: var(--panel);
+      box-shadow: 4px 4px 0 color-mix(in oklch, var(--ink) 18%, transparent);
+    }
+
+    .nav a,
+    .nav button,
+    .meta span,
+    .toggle button {
+      border: 0;
+      border-right: 2px solid var(--line-strong);
+      background: transparent;
+      color: var(--ink);
+      padding: 14px 16px;
+      font: inherit;
+      font-size: 0.78rem;
+      font-weight: 950;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      text-transform: uppercase;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .nav a:last-child,
+    .nav button:last-child,
+    .meta span:last-child,
+    .toggle button:last-child { border-right: 0; }
+
+    .nav a:hover,
+    .nav button:hover,
+    .toggle [aria-pressed="true"] {
+      background: var(--ink);
+      color: var(--bg);
+    }
+
+    .meta {
+      justify-self: end;
+      box-shadow: none;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+      gap: clamp(26px, 5vw, 70px);
+      align-items: end;
+      min-height: clamp(420px, 58vh, 640px);
+      padding-block: clamp(42px, 8vw, 95px) clamp(30px, 5vw, 64px);
+    }
+
+    .kicker {
+      display: inline-flex;
+      width: fit-content;
+      gap: 12px;
+      align-items: center;
+      border: 2px solid var(--line-strong);
+      background: var(--accent);
+      padding: 9px 12px;
+      color: oklch(16% 0.03 245);
+      font-size: 0.78rem;
+      font-weight: 950;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      box-shadow: 4px 4px 0 var(--line-strong);
+    }
+
+    h1 {
+      margin: 22px 0 18px;
+      max-width: 11ch;
+      color: var(--ink);
+      font-size: clamp(4.1rem, 10vw, 11rem);
+      line-height: 0.84;
+      letter-spacing: -0.075em;
+      text-transform: uppercase;
+    }
+
+    .lead {
+      max-width: 820px;
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2vw, 1.45rem);
+      line-height: 1.45;
+    }
+
+    .brief {
+      border: 2px solid var(--line-strong);
+      background: var(--panel);
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .brief h2 {
+      margin: 0 0 14px;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .brief dl {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 10px 14px;
+      margin: 0;
+      font-size: 0.95rem;
+      line-height: 1.35;
+    }
+
+    .brief dt {
+      color: var(--muted);
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+
+    .brief dd { margin: 0; }
+
+    .controls {
+      display: grid;
+      grid-template-columns: minmax(260px, 1fr) auto;
+      gap: 14px;
+      align-items: stretch;
+      margin: 28px 0 20px;
+    }
+
+    #directory,
+    #notes { scroll-margin-top: 24px; }
+
+    .search {
+      width: 100%;
+      border: 2px solid var(--line-strong);
+      background: var(--panel);
+      color: var(--ink);
+      padding: 18px;
+      font: inherit;
+      font-size: 1rem;
+      outline: none;
+      box-shadow: 4px 4px 0 color-mix(in oklch, var(--ink) 18%, transparent);
+    }
+
+    .search:focus {
+      border-color: var(--focus);
+      box-shadow: 0 0 0 4px color-mix(in oklch, var(--focus) 30%, transparent);
+    }
+
+    .toggle button {
+      min-width: 112px;
+      min-height: 58px;
+    }
+
+    .status {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 20px;
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 950;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .directory.grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 18px;
+    }
+
+    .directory.list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .card {
+      position: relative;
+      display: grid;
+      gap: 18px;
+      min-height: 260px;
+      padding: 20px;
+      border: 2px solid var(--line-strong);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      overflow: visible;
+    }
+
+    .card::after {
+      content: attr(data-code);
+      position: absolute;
+      right: 14px;
+      top: 10px;
+      z-index: 0;
+      max-width: 85%;
+      color: color-mix(in oklch, var(--ink) 9%, transparent);
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      font-weight: 950;
+      letter-spacing: -0.08em;
+      line-height: 0.8;
+      pointer-events: none;
+    }
+
+    .card > * { position: relative; z-index: 1; }
+
+    .list .card {
+      grid-template-columns: 92px minmax(220px, 1fr) minmax(240px, auto);
+      align-items: center;
+      min-height: 112px;
+      padding: 16px 18px;
+      box-shadow: 6px 6px 0 color-mix(in oklch, var(--ink) 13%, transparent);
+    }
+
+    .list .card::after { display: none; }
+
+    .index {
+      color: var(--accent-2);
+      font-size: 0.8rem;
+      font-weight: 950;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .name {
+      margin: 0;
+      max-width: 21ch;
+      overflow-wrap: anywhere;
+      color: var(--ink);
+      font-size: clamp(1.45rem, 2.4vw, 2.25rem);
+      font-weight: 950;
+      line-height: 1.02;
+      letter-spacing: -0.045em;
+      text-transform: uppercase;
+    }
+
+    .list .name {
+      max-width: none;
+      font-size: clamp(1.05rem, 1.7vw, 1.45rem);
+      letter-spacing: -0.025em;
+    }
+
+    .note {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.35;
+    }
+
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      align-self: end;
+    }
+
+    .link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      border: 2px solid var(--line-strong);
+      padding: 10px 12px;
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 950;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      background: var(--panel-2);
+    }
+
+    .link:hover,
+    .link:focus {
+      background: var(--ink);
+      color: var(--bg);
+    }
+
+    .link.primary {
+      background: var(--accent);
+      color: oklch(16% 0.03 245);
+    }
+
+    .link::after {
+      content: "↗";
+      margin-left: 8px;
+      font-size: 0.8em;
+    }
+
+    .footer {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      border-top: 2px solid var(--line-strong);
+      margin-top: 46px;
+      padding-block: 28px 50px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .footer p { margin: 0; max-width: 90ch; }
+
+    @media (max-width: 940px) {
+      .topbar,
+      .hero,
+      .footer {
+        grid-template-columns: 1fr;
+      }
+
+      .meta { justify-self: start; }
+      .nav { overflow-x: auto; }
+      .controls { grid-template-columns: 1fr; }
+      .toggle button { flex: 1; }
+      .list .card { grid-template-columns: 1fr; }
+      h1 { max-width: 9ch; font-size: clamp(3.6rem, 17vw, 7rem); }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar" aria-label="Page navigation">
+      <a class="brand" href="#top" aria-label="NY HELPS Agency Directory home">
+        <img src="assets/logo.svg" alt="" width="52" height="52">
+        <span>Frankstop<br>Agency Directory</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="#directory">001/Directory</a>
+        <a href="#notes">002/Notes</a>
+        <button id="themeBtn" type="button">003/Dark Mode</button>
+      </nav>
+      <div class="meta" aria-label="Summary">
+        <span>53 Agencies</span>
+        <span>Official Links</span>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="title">
+        <div>
+          <p class="kicker">Agency Directory System</p>
+          <h1 id="title">NY HELPS Agency Links</h1>
+          <p class="lead">Readable, high-contrast directory for New York State agency homepages and hiring pages. Search by acronym or agency name, then open the official site or careers destination.</p>
+        </div>
+        <aside class="brief" aria-label="Directory summary">
+          <h2>Page Contract</h2>
+          <dl>
+            <dt>Scope</dt><dd>State agencies from May 2026 NY HELPS list.</dd>
+            <dt>Links</dt><dd>Official agency site plus careers or StateJobsNY route.</dd>
+            <dt>Style</dt><dd>Public dashboard, high contrast, Pages-ready.</dd>
+            <dt>Logo</dt><dd>Original FV signal mark based on Frankstop repo themes.</dd>
+          </dl>
+        </aside>
+      </section>
+
+      <section id="directory" aria-label="Agency directory">
+        <div class="controls">
+          <input id="search" class="search" type="search" placeholder="Search agency, acronym, or link note" autocomplete="off">
+          <div class="toggle" aria-label="View options">
+            <button id="gridBtn" type="button" aria-pressed="true">Grid</button>
+            <button id="listBtn" type="button" aria-pressed="false">List</button>
+          </div>
+        </div>
+        <div class="status">
+          <span id="count">Showing 53 of 53</span>
+          <span>Homepage + careers route per agency</span>
+        </div>
+        <div id="cards" class="directory grid"></div>
+      </section>
+
+      <footer id="notes" class="footer">
+        <p>Notes: direct agency hiring pages are used when available. Agencies that route hiring through the statewide vacancy system point to StateJobsNY. Visual direction now favors clarity: bright default, dark toggle, uniform card structure, readable agency names, visible buttons, and consistent spacing.</p>
+        <p>Updated June 2, 2026.</p>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    const agencies = [
+      ["OASAS", "Office of Addiction Services and Supports", "https://oasas.ny.gov/", "https://oasas.ny.gov/jobs", "Direct careers page"],
+      ["APA", "Adirondack Park Agency", "https://apa.ny.gov/", "https://apa.ny.gov/About_Agency/jobs.html", "Direct careers page"],
+      ["ABO", "Authorities Budget Office", "https://abo.ny.gov/", "https://statejobs.ny.gov/public/vacancyTable.cfm", "StateJobsNY hiring route"],
+      ["OFA", "Office for the Aging", "https://aging.ny.gov/", "https://statejobs.ny.gov/public/vacancyTable.cfm", "StateJobsNY hiring route"],
+      ["AGM", "Department of Agriculture and Markets", "https://agriculture.ny.gov/", "https://agriculture.ny.gov/employment-information", "Direct careers page"],
+      ["NYSBA", "New York State Bridge Authority", "https://nysba.ny.gov/", "https://nysba.ny.gov/equal-opportunity-employment", "Employment page"],
+      ["DOB", "Division of the Budget", "https://budget.ny.gov/", "https://budget.ny.gov/employment/index.html", "Official employment page"],
+      ["NYSCC", "New York State Canal Corporation", "https://www.canals.ny.gov/", "https://www.canals.ny.gov/Careers", "Direct careers page"],
+      ["OCM", "Office of Cannabis Management", "https://cannabis.ny.gov/", "https://statejobs.ny.gov/public/vacancyTable.cfm", "StateJobsNY hiring route"],
+      ["OCFS", "Office of Children and Family Services", "https://ocfs.ny.gov/", "https://ocfs.ny.gov/main/employment/", "Direct careers page"],
+      ["CS", "Department of Civil Service", "https://www.cs.ny.gov/", "https://statejobs.ny.gov/public/vacancyTable.cfm", "StateJobsNY hiring route"],
+      ["SCOC", "State Commission of Correction", "https://scoc.ny.gov/", "https://statejobs.ny.gov/public/vacancyTable.cfm", "StateJobsNY hiring route"],
+      ["DOCCS", "Department of Corrections and Community Supervision", "https://doccs.ny.gov/", "https://doccs.ny.gov/employment-opportunities", "Direct careers page"],
+      ["DCJS", "Division of Criminal Justice Services", "https://criminaljustice.ny.gov/", "https://www.criminaljustice.ny.gov/employment.htm", "Direct employment page"],
+      ["ESD", "Empire State Development", "https://esd.ny.gov/", "https://esd.ny.gov/careers", "Direct careers page"],
+      ["DEC", "Department of Environmental Conservation", "https://dec.ny.gov/", "https://dec.ny.gov/about/employment", "Direct employment page"],
+      ["DFS", "Department of Financial Services", "https://dfs.ny.gov/", "https://www.dfs.ny.gov/contact_us/careers_with_dfs", "Direct careers page"],
+      ["NYSGC", "New York State Gaming Commission", "https://gaming.ny.gov/", "https://statejobs.ny.gov/public/vacancyTable.cfm", "StateJobsNY hiring route"],
+      ["OGS", "Office of General Services", "https://ogs.ny.gov/", "https://ogs.ny.gov/employment", "Direct employment page"],
+      ["DOH", "Department of Health", "https://health.ny.gov/", "https://health.ny.gov/employment/", "Direct employment page"],
+      ["HESC", "Higher Education Services Corporation", "https://hesc.ny.gov/", "https://statejobs.ny.gov/public/vacancyTable.cfm", "StateJobsNY hiring route"],
+      ["DHSES", "Division of Homeland Security and Emergency Services", "https://dhses.ny.gov/", "https://dhses.ny.gov/careers", "Direct careers page"],
+      ["HCR", "Homes and Community Renewal", "https://hcr.ny.gov/", "https://hcr.ny.gov/jobs", "Direct jobs page"],
+      ["DHR", "Division of Human Rights", "https://dhr.ny.gov/", "https://dhr.ny.gov/employment-opportunities", "Direct employment page"],
+      ["ITS", "Office of Information Technology Services", "https://its.ny.gov/", "https://its.ny.gov/employment-opportunities", "Direct employment page"],
+      ["NYSJC", "Justice Center for the Protection of People With Special Needs", "https://www.justicecenter.ny.gov/", "https://www.justicecenter.ny.gov/employment-opportunities", "Direct employment page"],
+      ["Labor", "Department of Labor", "https://dol.ny.gov/", "https://statejobs.ny.gov/public/vacancyTable.cfm", "StateJobsNY hiring route"],
+      ["LGPC", "Lake George Park Commission", "https://lgpc.ny.gov/", "https://statejobs.ny.gov/public/vacancyTable.cfm", "StateJobsNY hiring route"],
+      ["SLA", "State Liquor Authority", "https://sla.ny.gov/", "https://statejobs.ny.gov/public/vacancyTable.cfm", "StateJobsNY hiring route"],
+      ["OMIG", "Office of the Medicaid Inspector General", "https://omig.ny.gov/", "https://statejobs.ny.gov/public/vacancyTable.cfm", "StateJobsNY hiring route"],
+      ["DMV", "Department of Motor Vehicles", "https://dmv.ny.gov/", "https://dmv.ny.gov/node/5611", "Official careers page"],
+      ["OMH", "Office of Mental Health", "https://omh.ny.gov/", "https://omh.ny.gov/omhweb/employment/", "Direct employment page"],
+      ["OSC", "Office of the State Comptroller", "https://www.osc.ny.gov/", "https://www.osc.ny.gov/jobs", "Direct jobs page"],
+      ["OPRHP", "Office of Parks, Recreation and Historic Preservation", "https://parks.ny.gov/", "https://parks.ny.gov/about/employment", "Direct employment page"],
+      ["OPWDD", "Office for People With Developmental Disabilities", "https://opwdd.ny.gov/", "https://opwdd.ny.gov/career-opportunities", "Direct careers page"],
+      ["OPDV", "Office for the Prevention of Domestic Violence", "https://opdv.ny.gov/", "https://statejobs.ny.gov/public/vacancyTable.cfm", "StateJobsNY hiring route"],
+      ["PERB", "Public Employment Relations Board", "https://perb.ny.gov/", "https://statejobs.ny.gov/public/vacancyTable.cfm", "StateJobsNY hiring route"],
+      ["PSC", "Public Service Commission / Department of Public Service", "https://dps.ny.gov/", "https://dps.ny.gov/employment-opportunities", "Direct employment page"],
+      ["DOS", "Department of State", "https://dos.ny.gov/", "https://statejobs.ny.gov/public/vacancyTable.cfm", "StateJobsNY hiring route"],
+      ["AG", "Office of the Attorney General", "https://ag.ny.gov/", "https://ag.ny.gov/job-postings", "Direct job postings"],
+      ["NYSBOE", "New York State Board of Elections", "https://elections.ny.gov/", "https://statejobs.ny.gov/public/vacancyTable.cfm", "StateJobsNY hiring route"],
+      ["NYSED", "New York State Education Department", "https://www.nysed.gov/", "https://www.nysed.gov/hr/employment/employment-opportunities", "Direct employment page"],
+      ["NYSIF", "New York State Insurance Fund", "https://ww3.nysif.com/", "https://ww3.nysif.com/Home/FooterPages/Column1/AboutNYSIF/Careers", "Direct careers page"],
+      ["SUNY", "State University of New York", "https://www.suny.edu/", "https://www.suny.edu/careers/", "Direct careers page"],
+      ["SFS", "Statewide Financial System", "https://www.sfs.ny.gov/", "https://statejobs.ny.gov/public/vacancyTable.cfm", "StateJobsNY hiring route"],
+      ["DTF", "Department of Taxation and Finance", "https://www.tax.ny.gov/", "https://www.tax.ny.gov/about/empopps/", "Direct employment page"],
+      ["NYSTRS", "New York State Teachers' Retirement System", "https://www.nystrs.org/", "https://www.nystrs.org/About-Us/Careers", "Direct careers page"],
+      ["OTDA", "Office of Temporary and Disability Assistance", "https://otda.ny.gov/", "https://otda.ny.gov/working-for-otda/", "Direct employment page"],
+      ["NYSTA", "New York State Thruway Authority", "https://www.thruway.ny.gov/", "https://www.thruway.ny.gov/about/jobs", "Direct jobs page"],
+      ["DOT", "Department of Transportation", "https://www.dot.ny.gov/", "https://www.dot.ny.gov/jobs", "Direct jobs page"],
+      ["DVS", "Department of Veterans' Services", "https://veterans.ny.gov/", "https://statejobs.ny.gov/public/vacancyTable.cfm", "StateJobsNY hiring route"],
+      ["OVS", "Office of Victim Services", "https://ovs.ny.gov/", "https://statejobs.ny.gov/public/vacancyTable.cfm", "StateJobsNY hiring route"],
+      ["WCB", "Workers' Compensation Board", "https://www.wcb.ny.gov/", "https://www.wcb.ny.gov/careers/", "Direct careers page"]
+    ];
+
+    const cards = document.querySelector("#cards");
+    const count = document.querySelector("#count");
+    const search = document.querySelector("#search");
+    const gridBtn = document.querySelector("#gridBtn");
+    const listBtn = document.querySelector("#listBtn");
+    const themeBtn = document.querySelector("#themeBtn");
+
+    function render() {
+      const q = search.value.trim().toLowerCase();
+      cards.innerHTML = "";
+      const filtered = agencies.filter(([code, name, home, careers, note]) => {
+        return [code, name, home, careers, note].join(" ").toLowerCase().includes(q);
+      });
+
+      filtered.forEach(([code, name, home, careers, note], index) => {
+        const article = document.createElement("article");
+        article.className = "card";
+        article.dataset.code = code;
+        article.innerHTML = `
+          <div class="index">${String(index + 1).padStart(3, "0")} / ${code}</div>
+          <div>
+            <h2 class="name">${name}</h2>
+            <p class="note">${note}</p>
+          </div>
+          <div class="links">
+            <a class="link primary" href="${home}" target="_blank" rel="noopener noreferrer">Agency site</a>
+            <a class="link" href="${careers}" target="_blank" rel="noopener noreferrer">Careers</a>
+          </div>
+        `;
+        cards.append(article);
+      });
+      count.textContent = `Showing ${filtered.length} of ${agencies.length}`;
+    }
+
+    function setView(view) {
+      const isGrid = view === "grid";
+      cards.classList.toggle("grid", isGrid);
+      cards.classList.toggle("list", !isGrid);
+      gridBtn.setAttribute("aria-pressed", String(isGrid));
+      listBtn.setAttribute("aria-pressed", String(!isGrid));
+    }
+
+    function setTheme(isDark) {
+      document.body.classList.toggle("theme-dark", isDark);
+      themeBtn.textContent = isDark ? "003/Light Mode" : "003/Dark Mode";
+      localStorage.setItem("nyhelps-theme", isDark ? "dark" : "light");
+    }
+
+    search.addEventListener("input", render);
+    gridBtn.addEventListener("click", () => setView("grid"));
+    listBtn.addEventListener("click", () => setView("list"));
+    themeBtn.addEventListener("click", () => setTheme(!document.body.classList.contains("theme-dark")));
+
+    setTheme(localStorage.getItem("nyhelps-theme") === "dark");
+    render();
+  </script>
+</body>
+</html>
