@@ -594,8 +594,8 @@
             <p class="note">${note}</p>
           </div>
           <div class="links">
-            <a class="link primary" href="${home}" target="_blank" rel="noopener noreferrer">Agency site</a>
-            <a class="link" href="${careers}" target="_blank" rel="noopener noreferrer">Careers</a>
+            <a class="link primary" href="${home}" target="_blank" rel="noopener noreferrer" data-track-outbound="true" data-agency-code="${code}" data-agency-name="${name}" data-link-type="agency_site">Agency site</a>
+            <a class="link" href="${careers}" target="_blank" rel="noopener noreferrer" data-track-outbound="true" data-agency-code="${code}" data-agency-name="${name}" data-link-type="careers">Careers</a>
           </div>
         `;
         cards.append(article);
@@ -621,6 +621,18 @@
     gridBtn.addEventListener("click", () => setView("grid"));
     listBtn.addEventListener("click", () => setView("list"));
     themeBtn.addEventListener("click", () => setTheme(!document.body.classList.contains("theme-dark")));
+    cards.addEventListener("click", (event) => {
+      const link = event.target.closest("[data-track-outbound]");
+      if (!link || typeof gtag !== "function") return;
+
+      gtag("event", "agency_outbound_click", {
+        agency_code: link.dataset.agencyCode,
+        agency_name: link.dataset.agencyName,
+        link_type: link.dataset.linkType,
+        link_url: link.href,
+        link_domain: new URL(link.href).hostname
+      });
+    });
 
     setTheme(localStorage.getItem("nyhelps-theme") === "dark");
     render();
